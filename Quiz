@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiz Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    #quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .question {
+      font-weight: bold;
+    }
+    .option {
+      margin: 10px 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz-container">
+    <div id="question-container" class="question"></div>
+    <div id="options-container"></div>
+    <button onclick="nextQuestion()">Next</button>
+    <div id="result" style="margin-top: 20px;"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "What is the capital of France?",
+        options: ["Paris", "London", "Rome", "Berlin"],
+        answer: "Paris"
+      },
+      {
+        question: "Which is the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter", "Venus"],
+        answer: "Mars"
+      },
+      {
+        question: "What does HTML stand for?",
+        options: [
+          "Hyper Text Markup Language",
+          "Hot Mail",
+          "How To Make Landingpage",
+          "Home Tool Markup Language"
+        ],
+        answer: "Hyper Text Markup Language"
+      },
+      {
+        question: "Which language runs in a web browser?",
+        options: ["Java", "C", "Python", "JavaScript"],
+        answer: "JavaScript"
+      },
+      {
+        question: "Which company developed the Windows OS?",
+        options: ["Apple", "Microsoft", "Google", "IBM"],
+        answer: "Microsoft"
+      },
+      {
+        question: "Which symbol is used for comments in Python?",
+        options: ["//", "#", "/* */", "<!-- -->"],
+        answer: "#"
+      },
+      {
+        question: "What is the output of 3 ** 2 in Python?",
+        options: ["6", "9", "8", "Error"],
+        answer: "9"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      document.getElementById("result").innerText = "";
+      const q = quizData[currentQuestion];
+      document.getElementById("question-container").innerText = q.question;
+
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+      q.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.innerText = option;
+        btn.className = "option";
+        btn.onclick = () => checkAnswer(option);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correct = quizData[currentQuestion].answer;
+      if (selected === correct) {
+        score++;
+        document.getElementById("result").innerText = "✅ Correct!";
+      } else {
+        document.getElementById("result").innerText = `❌ Wrong! The correct answer is: ${correct}`;
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        document.getElementById("quiz-container").innerHTML = `<h2>🏁 Game Over! You scored ${score}/${quizData.length}</h2>`;
+      }
+    }
+
+    // Initialize the quiz
+    loadQuestion();
+  </script>
+</body>
+</html>
