@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CalC</title>
+  <style>
+    body {
+      text-align: center;
+      margin: 50px;
+      font-family: Arial, sans-serif;
+    }
+
+    .calculator {
+      display: inline-block;
+      padding: 30px;
+      margin: 50px;
+      border: 1px solid skyblue;
+      border-radius: 5px;
+    }
+
+    .screen {
+      width: 200px;
+      height: 30px;
+      text-align: right;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    button {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <div>Calculator:</div>
+    <input type="text" id="screen" class="screen" readonly>
+    <br>
+    <button onclick="appendToExpression('7')">7</button>
+    <button onclick="appendToExpression('8')">8</button>
+    <button onclick="appendToExpression('9')">9</button>
+    <button onclick="appendToExpression('+')">+</button>
+    <br>
+    <button onclick="appendToExpression('4')">4</button>
+    <button onclick="appendToExpression('5')">5</button>
+    <button onclick="appendToExpression('6')">6</button>
+    <button onclick="appendToExpression('-')">-</button>
+    <br>
+    <button onclick="appendToExpression('1')">1</button>
+    <button onclick="appendToExpression('2')">2</button>
+    <button onclick="appendToExpression('3')">3</button>
+    <button onclick="appendToExpression('')"></button>
+    <br>
+    <button onclick="clearScreen()">C</button>
+    <button onclick="appendToExpression('0')">0</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="appendToExpression('/')">/</button>
+  </div>
+
+  <script>
+    let screen = document.getElementById('screen');
+    let expression = '';
+
+    function appendToExpression(value) {
+      expression += value;
+      screen.value = expression;
+    }
+
+    function clearScreen() {
+      expression = '';
+      screen.value = '';
+    }
+
+    function calculate() {
+      try {
+        let result = eval(expression);
+        screen.value = result;
+        expression = result.toString();
+      } catch {
+        screen.value = 'Error';
+        expression = '';
+      }
+    }
+  </script>
+
+</body>
+</html>
